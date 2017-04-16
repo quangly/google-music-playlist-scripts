@@ -11,8 +11,8 @@ Uses the unofficial Google Music Api by [simon weber](https://github.com/simon-w
 
 ## You may need
 
-pip install gmusicapi --user
-pip install cryptography --user
+* pip install gmusicapi --user
+* pip install cryptography --user
 
 
 ### Change login credentials
