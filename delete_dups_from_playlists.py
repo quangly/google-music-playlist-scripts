@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 from gmusicapi import Mobileclient
 import sys
+
+REMOVE_FLAG = False
 def find_and_remove_dups(api, tracks):
     track_set = set()
     delete_count = 0
+
     for track in tracks:
         trackId = track['trackId']
         entryId = track['id']
         if trackId in track_set:
             print("    found duplicate with trackId: " + trackId + ", deleting")
-            api.remove_entries_from_playlist(entryId)
+            if REMOVE_FLAG:
+                api.remove_entries_from_playlist(entryId)
             delete_count += 1
         else:
             track_set.add(trackId)
@@ -39,6 +43,10 @@ if logged_in:
         print("Checking duplicates from " + playlist['name'] + "...")
         tracks = playlist['tracks']
         find_and_remove_dups(api, tracks)
+    
+    if REMOVE_FLAG is False:
+        print("REMOVE_FLAG is False")
+
 else:
     print("Error: not logged in")
 
