@@ -2,7 +2,7 @@
 from gmusicapi import Mobileclient
 import sys
 
-REMOVE_FLAG = False
+REMOVE_FLAG = True
 def find_and_remove_dups(api, tracks):
     track_set = set()
     delete_count = 0
@@ -13,7 +13,10 @@ def find_and_remove_dups(api, tracks):
         if trackId in track_set:
             print("    found duplicate with trackId: " + trackId + ", deleting")
             if REMOVE_FLAG:
-                api.remove_entries_from_playlist(entryId)
+                try:
+                    api.remove_entries_from_playlist(entryId)
+                except Exception as e:
+                    print(e)
             delete_count += 1
         else:
             track_set.add(trackId)
@@ -30,8 +33,8 @@ if len(sys.argv) != 1:
     exit(0)
 
 api = Mobileclient()
-username = "username"
-password = "password" # or app-specific password for 2 Factor Authentication
+username = "emailadress"
+password = "your password" # or app-specific password for 2 Factor Authentication
 logged_in = api.login(username, password,  Mobileclient.FROM_MAC_ADDRESS)
 
 
